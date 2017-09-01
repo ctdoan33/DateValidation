@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Date Validation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".datepicker").datepicker();
+                $("form").submit(function(){
+                    if($("#from").val()==""||$("#to").val()==""||$("#name").val()==""){
+                        $("#error").text("You must complete all fields!");
+                    }else{
+                        var from=Date.parse($("#from").val());
+                        var to=Date.parse($("#to").val());
+                        if(from>=to){
+                            $("#error").text("The 'To' date must be after the 'From' date!");
+                        }else{
+                            $("#dialog").dialog();
+                            $("#dialog p").text("Thanks "+$("#name").val()+"! You have been scheduled from "+$("#from").val()+" to "+$("#to").val()+"!");
+                        }
+                    }
+                    return false;
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <form>
+            <p>From: <input type="text" id="from" class="datepicker"></p>
+            <p>To: <input type="text" id="to" class="datepicker"></p>
+            <p>Name: <input type="text" id="name"></p>
+            <p id="error" style="color: red"></p>
+            <input type="submit" value="Check Dates!">
+        </form>
+        <div id="dialog" title="Alert">
+            <p></p>
+        </div>
+    </body>
+</html>
